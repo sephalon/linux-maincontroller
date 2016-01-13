@@ -307,8 +307,8 @@ static int mm_debug_link_probe(struct platform_device *pdev)
 
 	areg = platform_get_resource(pdev, IORESOURCE_MEM, 0);
 	pdata->base_reg = devm_ioremap_resource(&pdev->dev, areg);
-	if (!pdata->base_reg)
-		return -EADDRNOTAVAIL;
+	if (IS_ERR(pdata->base_reg))
+		return PTR_ERR(pdata->base_reg);
 
 	/* Check the signature, fail if not found. */
 	sig = readl(pdata->base_reg + MM_DEBUG_LINK_SIGNATURE);
