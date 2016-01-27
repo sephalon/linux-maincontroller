@@ -1,0 +1,21 @@
+#include "socfpga_cyclone5_mercury_sa1.dts"
+
+/ {
+	soc {
+		hps2fpga: bridge@0xc0000000 {
+			compatible = "altr,bridge-15.0", "simple-bus";
+			reg = <0xc0000000 0x20000000>;
+			#address-cells = <2>;
+			#size-cells = <1>;
+			ranges = <0x00000000 0x00001010 0xc0001010 0x00000008>,
+				<0x00000000 0x00010000 0xc0010000 0x00000080>,
+				<0x00000000 0x00001000 0xc0001000 0x00000010>,
+				<0x00000000 0x00000000 0xc0000000 0x00001000>;
+
+			sld_hub_controller_system: debug@0x000010000 {
+				compatible = "altr,altera_mm_debug_link-15.0", "altr,mm-debug-link-1.0";
+				reg = <0x00000000 0x00010000 0x00000080>;
+			};
+		};
+	};
+};
