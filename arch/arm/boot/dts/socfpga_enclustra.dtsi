@@ -507,6 +507,39 @@
 			status = "disabled";
 		};
 
+		hps_0_fpgamgr: fpgamgr@0xff706000 {
+			compatible = "altr,fpga-mgr-1.0", "altr,fpga-mgr";
+			transport = "mmio";
+			reg = <0xFF706000 0x1000
+			0xFFB90000 0x1000>;
+			interrupts = <0 175 4>;
+		};
+
+		hps_fpgabridge0: fpgabridge@0 {
+			compatible = "altr,socfpga-hps2fpga-bridge";
+			label = "hps2fpga";
+			resets = <&rst HPS2FPGA_RESET>;
+			reset-names = "hps2fpga";
+			clocks = <&l4_main_clk>;
+		};
+
+		hps_fpgabridge1: fpgabridge@1 {
+			compatible = "altr,socfpga-lwhps2fpga-bridge";
+			label = "lwhps2fpga";
+			resets = <&rst LWHPS2FPGA_RESET>;
+			reset-names = "lwhps2fpga";
+			clocks = <&l4_main_clk>;
+		};
+
+		hps_fpgabridge2: fpgabridge@2 {
+			compatible = "altr,socfpga-fpga2hps-bridge";
+			label = "fpga2hps";
+			resets = <&rst FPGA2HPS_RESET>;
+			reset-names = "fpga2hps";
+			clocks = <&l4_main_clk>;
+		};
+
+
 		i2c0: i2c@ffc04000 {
 			#address-cells = <1>;
 			#size-cells = <0>;
@@ -642,6 +675,11 @@
 		ocram: sram@ffff0000 {
 			compatible = "mmio-sram";
 			reg = <0xffff0000 0x10000>;
+		};
+
+		l3regs@0xff800000 {
+			compatible = "altr,l3regs", "syscon";
+			reg = <0xff800000 0x1000>;
 		};
 
 		spi0: spi@fff00000 {
